@@ -135,6 +135,24 @@ package stateMachine
 			return (stateName!=_state && (_states[stateName].from.indexOf(_state)!=-1 || _states[stateName].from == "*"));
 		}
 
+
+		public function tryChangeStateTo(stateName:String):Boolean {
+			if(canChangeStateTo(stateName)) {
+				changeState(stateName);
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		public function tryChangeStateToInOrder(stateNames:Array):void {
+			for each(var stateName:String in stateNames) {
+				if(tryChangeStateTo(stateName)) {
+					break;
+				}
+			}
+		}
+
 		/**
 		 * Discovers the how many "exits" and how many "enters" are there between two
 		 * given states and returns an array with these two integers
